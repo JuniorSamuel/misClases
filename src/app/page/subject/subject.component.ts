@@ -17,9 +17,7 @@ export class SubjectComponent implements OnInit {
   public Estudiantes: Estudiante[] = []
   public Score: any = {}
   Calificaciones: Calificacion[] = [];
-  public formControls: FormGroup;
-  constructor(private claseApi: ClaseApiService, private rutaActiva: ActivatedRoute, private formBuilder: FormBuilder) {
-    this.formControls = this.formBuilder.group({})
+  constructor(private claseApi: ClaseApiService, private rutaActiva: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -31,14 +29,7 @@ export class SubjectComponent implements OnInit {
 
   getStudents() {
     this.claseApi.Estudiante.getAll("/score").subscribe(res => {
-      this.Estudiantes = res;
-      let control: any = {}
-      this.Estudiantes.forEach((e) => {
-        control[e.id] = ''
-      })
-      this.formControls = this.formBuilder.group(control);
-      console.log(this.formControls);
-      
+      this.Estudiantes = res;      
     })
   }
   public newScore(e: Event, idStundent: number, idScore: number) {
@@ -53,12 +44,13 @@ export class SubjectComponent implements OnInit {
 
     }
 
-    this.claseApi.Calificacion.update(idScore, score).subscribe(res => {
-      this.getStudents();
+    this.claseApi.Calificacion.add(score).subscribe(res => {
+      console.log(res);
+      
     });
   }
 
-  public save(){
-
+  public update(){
+    this.getStudents()
   }
 }

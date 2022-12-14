@@ -24,16 +24,16 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.claseApi.Estudiante.getAll()
-      .subscribe((res) => {
-        this.Estudiantes = res;
-      })
+   this.getStudents()
   }
 
-  /**
-   * addStudent
-   * @description Add a new Student to the list.
-   */
+  getStudents(){
+    this.claseApi.Estudiante.getAll()
+    .subscribe((res) => {
+      this.Estudiantes = res;
+    })
+  }
+
   public addStudent() {
 
     document.getElementById("form-student")?.classList.add('was-validated');
@@ -41,20 +41,17 @@ export class StudentComponent implements OnInit {
     if (this.formStudent.valid) {
       let estudiante: Estudiante = this.formStudent.value;
       estudiante.id =0;
-      console.log(estudiante);
       
       this.claseApi.Estudiante.add(estudiante).subscribe((res) => {
-        console.log(res);
         document.getElementById("id-close-modal")?.click();
         this.formStudent.reset()
+        this.getStudents()
       });
     }
   }
 
   public deleteStudent(id: number) {
     this.claseApi.Estudiante.delete(id).subscribe((res) => {
-      console.log(res);
-
       this.Estudiantes = this.Estudiantes.filter((e) => e.id !== id);
     })
   }

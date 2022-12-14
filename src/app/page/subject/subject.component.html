@@ -3,7 +3,7 @@
        <h5>{{title}}</h5>
     </div>
     <div>
-        <button class="btn btn-primary" (click)="save()">Guardar</button>
+        <button class="btn btn-primary" (click)="update()">Actualizar</button>
     </div>
 </div>
 <table class="table my-4">
@@ -22,7 +22,9 @@
             <td style="width: 50px;">
                 <input placeholder="0" max="100" min="0" type="number" class="form-control" [value]="estudiante.calificacion" (change)="newScore($event, estudiante.id, estudiante.idCalificacion)">
             </td>
-            <td> {{ estudiante.literal }} </td>
+            <td> 
+                <span class="badge" [ngClass]="{'text-bg-danger': estudiante.literal=='F', 'text-bg-primary': estudiante.literal=='B','text-bg-success': estudiante.literal=='A' ,'text-bg-warning': estudiante.literal=='C'}">{{estudiante.literal}}</span>
+            </td>
         </tr>
     </tbody>
 </table>

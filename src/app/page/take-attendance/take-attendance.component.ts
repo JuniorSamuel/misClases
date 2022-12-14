@@ -21,11 +21,11 @@ export class TakeAttendanceComponent implements OnInit {
 
   ngOnInit(): void {
 
-   this.getEstudiante()
+   this.getStudents()
 
   }
 
-  getEstudiante(){
+  getStudents(){
     this.claseApi.Estudiante.getAll('/list').subscribe( res => {
       this.Estudiantes = res;
       this.updateWeekLabel();
@@ -71,12 +71,12 @@ export class TakeAttendanceComponent implements OnInit {
       
       this.claseApi.Lista.add(list).subscribe(
         res => {
-          console.log(res);   
+          this.getStudents()  
         }
       )
     }
 
-    this.getEstudiante()
+    
   }
 
   // History Code

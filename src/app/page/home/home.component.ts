@@ -9,11 +9,18 @@ import { Materia } from 'src/app/interface/materia.interface';
 })
 export class HomeComponent implements OnInit {
 
+  public searchField: string = "";
+  public titleSubject: string = "";
+  public validar: boolean = false;
   public Materias: Materia[] = [];
   constructor(private claseApi: ClaseApiService) { }
 
   ngOnInit(): void {
     
+    this.getMaterias();
+  }
+
+  getMaterias() {
     this.claseApi.Materia.getAll()
     .subscribe( (res) => {
       console.log(res)
@@ -21,4 +28,21 @@ export class HomeComponent implements OnInit {
       })
   }
 
+  addMateria() {
+    document.getElementById("form-student=title")?.classList.add('was-validated');
+    if (this.titleSubject != "") {
+      let materia: Materia = {
+        id: 0,
+        nombre: this.titleSubject,
+        calificacions:  []
+      }
+      this.claseApi.Materia.add(materia).subscribe(res => {
+        document.getElementById("id-close-modal")?.click();
+        this.titleSubject = ""
+        this.getMaterias();
+      });
+    }else{
+       
+    }
+  }
 }

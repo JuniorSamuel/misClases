@@ -89,7 +89,9 @@
                     <tr *ngFor="let estudiante of Estudiantes|histoyAttendance:weekLabel:week:weekDate; let i=index">
                         <th scope="row">{{i+1}}</th>
                         <td>{{estudiante.nombre}} {{estudiante.apellido}}</td>
-                        <td scope="col" *ngFor="let dia of estudiante.semana"> {{dia}} </td>
+                        <td scope="col" *ngFor="let dia of estudiante.semana"> 
+                            <span class="badge" [ngClass]="{'text-bg-danger': dia=='P', 'text-bg-success': dia=='A' ,'text-bg-warning': dia=='E'}">{{dia}}</span>
+                        </td>
 
                     </tr>
                 </tbody>

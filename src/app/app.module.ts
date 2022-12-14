@@ -13,6 +13,7 @@ import { TakeAttendanceComponent } from './page/take-attendance/take-attendance.
 import { HistoyAttendancePipe, takeAttendancePipe } from './pipe/histoy-attendance.pipe';
 import { SubjectComponent } from './page/subject/subject.component';
 import { ScorePipe } from './pipe/score.pipe';
+import { FiltroPipe } from './pipe/filtro.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ScorePipe } from './pipe/score.pipe';
     HistoyAttendancePipe,
     takeAttendancePipe,
     SubjectComponent,
-    ScorePipe
+    ScorePipe,
+    FiltroPipe
   ],
   providers: [],
   bootstrap: [AppComponent],
