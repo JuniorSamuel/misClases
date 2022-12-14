@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between">
+    <div>
+       <h5>{{title}}</h5>
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="save()">Guardar</button>
+    </div>
+</div>
+<table class="table my-4">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Calificacion</th>
+            <th scope="col">Literal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let estudiante of Estudiantes | score:idSubject; let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{estudiante.nombre}} {{estudiante.apellido}}</td>
+            <td style="width: 50px;">
+                <input placeholder="0" max="100" min="0" type="number" class="form-control" [value]="estudiante.calificacion" (change)="newScore($event, estudiante.id, estudiante.idCalificacion)">
+            </td>
+            <td> {{ estudiante.literal }} </td>
+        </tr>
+    </tbody>
+</table>

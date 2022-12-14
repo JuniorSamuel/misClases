@@ -1,0 +1,27 @@
+<header>
+    <nav class="navbar navbar-dark bg-primary navbar-expand-lg ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">{{titulo}}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" routerLinkActive="active" aria-current="page" routerLink="/home">Inicio</a>
+                    <a class="nav-link" routerLinkActive="active" routerLink="/student">Estudiante</a>
+                    <a class="nav-link" routerLinkActive="active" routerLink="/takeAttendance">Asistencia</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="my=1" *ngIf="false">
+        <nav style="--bs-breadcrumb: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+          </nav>
+    </div>
+</header>

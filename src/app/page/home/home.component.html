@@ -1,0 +1,37 @@
+
+
+<div>
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <input  class="form-control" type="text" name="find" id="find-input"
+                placeholder="Buscar">
+        </div>
+        <div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentmodal">Agregar</button>
+        </div>
+    </div>
+    <table class="table my-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col"> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let materia of Materias; let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{materia.nombre}}</td>
+                <td align="end" >
+                    <div class="btn-group" role="group">
+                        <!-- <button type="button" class="btn btn-success" [routerLink]="['/sub', '/'+materia.id+'/', materia.nombre]">Ver</button> -->
+                        <button type="button" class="btn btn-success" [routerLink]="['/sub', materia.id, materia.nombre]">Ver</button>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
