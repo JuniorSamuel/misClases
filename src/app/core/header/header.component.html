@@ -1,16 +1,15 @@
 <header>
-    <nav class="navbar navbar-dark bg-primary navbar-expand-lg ">
-        <div class="container-fluid">
+    <nav class="navbar fixed-top navbar-dark  bg-primary navbar-expand-md ">
+        <div class="container">
             <a class="navbar-brand" href="#">{{titulo}}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse" id="navbar">
                 <div class="navbar-nav">
-                    <a class="nav-link" routerLinkActive="active" aria-current="page" routerLink="/home">Inicio</a>
-                    <a class="nav-link" routerLinkActive="active" routerLink="/student">Estudiante</a>
-                    <a class="nav-link" routerLinkActive="active" routerLink="/takeAttendance">Asistencia</a>
+                    <a class="nav-link" routerLinkActive="active" routerLink="/home/student">Estudiante</a>
+                    <a class="nav-link" routerLinkActive="active" routerLink="/home/take_attendence">Asistencia</a>
                 </div>
             </div>
         </div>
@@ -25,3 +24,4 @@
           </nav>
     </div>
 </header>
+

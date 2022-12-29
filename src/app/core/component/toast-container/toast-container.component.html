@@ -1,0 +1,12 @@
+<ngb-toast *ngFor="let toast of toasts" 
+    [class]="toast.classname" [autohide]="true"
+    [ngClass]="{
+        'bg-success text-light': toast.style == ToastStyle.Success,
+        'bg-danger': toast.style == ToastStyle.Danger,
+        'bg-warning': toast.style == ToastStyle.Warning,
+        'bg-primary text-light': toast.style == ToastStyle.Primary
+    }"
+    [delay]="toast.delay || 5000" (hidden)="remove(toast)">
+
+    {{ toast.textOrTpl }}
+</ngb-toast>

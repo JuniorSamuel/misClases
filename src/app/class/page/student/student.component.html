@@ -1,0 +1,107 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <input [(ngModel)]="searchField" class="form-control" type="text" name="find" id="find-input"
+            placeholder="Buscar">
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="openModal(studentModal, ModalStatus.Add)">Agregar</button>
+    </div>
+</div>
+
+<table class="table my-4">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Comentario</th>
+            <th scope="col"> Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            *ngFor="let estudiante of Estudiantes | filterWithPagination:searchField:['nombre']:pagPageSize:pagPage:pagEventEmitter; let i=index">
+            <th scope="row">{{i+1+((pagPage-1)*pagPageSize)}}</th>
+            <td>{{estudiante?.nombre}}</td>
+            <td>{{estudiante?.apellido}}</td>
+            <td style="width: auto;">{{estudiante?.comentario | slice:0:15}}</td>
+            <td style="width: 30px;">
+                <div *ngIf="estudiante.id" class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button title="Modificar" type="button" class="btn btn-danger"
+                        (click)="openModal(deleteModal, ModalStatus.Delete, estudiante)"><i class="bi bi-trash"></i>
+                    </button>
+                    <button title="Eliminar" type="button" class="btn btn-warning"
+                        (click)="openModal(studentModal, ModalStatus.Update, estudiante)"><i class="bi bi-pencil"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<ngb-pagination class="d-flex justify-content-end" [(page)]="pagPage" [pageSize]="pagPageSize"
+    [collectionSize]="pagLengthList"></ngb-pagination>
+
+<!-- Modal add student -->
+<ng-template #studentModal let-modalStudent>
+    <div class="modal-header">
+        <div [ngSwitch]="modalStatus">
+            <h1 *ngSwitchCase="ModalStatus.Add" class="modal-title fs-5" id="studentmodalLabel"> Agregar Estudiante</h1>
+            <h1 *ngSwitchCase="ModalStatus.Update" class="modal-title fs-5" id="studentmodalLabel"> Modificar Estudiante
+            </h1>
+        </div>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalStudent.close()"></button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <form id="form-student" [formGroup]="formStudent" class="row needs-validation" novalidate>
+                <div class="mb-3 col-12 col-md-4">
+                    <label for="name-field" class="form-label">Nombre</label>
+                    <input class="form-control" placeholder="Juan" type="text" name="" id="name-field"
+                        formControlName="nombre" required>
+                </div>
+                <div class="mb-3 col-12 col-md-4">
+                    <label for="lastName-field" class="form-label">Apellido</label>
+                    <input class="form-control" placeholder="Medina" type="text" name="" id="lastName-field"
+                        formControlName="apellido" required>
+                </div>
+                <div class="mb-3 col-12">
+                    <label ifor="comment-field" class="form-label">Comentario</label>
+                    <textarea class="form-control" name="comment" id="comment-field" cols="30" rows="10"
+                        placeholder="Agrega un comentario (Opcional)" formControlName="comentario"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="id-close-modal" type="button" class="btn btn-danger"
+            (click)="modalStudent.close()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" *ngIf="modalStatus == ModalStatus.Add"
+            (click)="addStudent()">Agregar</button>
+        <button type="submit" class="btn btn-primary" *ngIf="modalStatus == ModalStatus.Update"
+            (click)="updateStudent()">Modificar</button>
+    </div>
+</ng-template>
+
+<!-- Delete modal -->
+<ng-template #deleteModal let-modalDelete>
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="studentmodalLabel"> Eliminar a {{student.nombre}}</h1>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalDelete.dismiss()"></button>
+    </div>
+    <div class="modal-boby">
+        <div class="m-3">
+            <p class="text-danger">
+                ¿Seguro quiere eliminar a {{student.nombre}} {{student.apellido}}?
+            </p>
+
+            <p>Esta acción no es reversible</p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="id-close-modal" type="button" class="btn btn-primary"
+            (click)="modalDelete.dismiss()">Cancelar</button>
+        <button type="submit" class="btn btn-danger" (click)="deleteStudent(student.id)">Eliminar</button>
+    </div>
+</ng-template>

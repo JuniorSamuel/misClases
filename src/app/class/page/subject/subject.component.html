@@ -1,0 +1,32 @@
+<div class="my-3 d-flex justify-content-between">
+    <div>
+       <h5>{{materia.nombre}}</h5>
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="updateScore()">Guardar Cambios</button>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Calificacion</th>
+            <th scope="col">Literal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let estudiante of estudiantes | score:materia.id; let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{estudiante.nombre}} {{estudiante.apellido}}</td>
+            <td style="width: 30px;">
+                <input [id]="'inputScore-'+estudiante.id" placeholder="0" max="100" min="0" type="number" class="form-control" 
+                [value]="estudiante.calificacion" 
+                (change)="newScore($event, estudiante.id, estudiante.idCalificacion)">
+            </td>
+            <td style="width: 30px;"> 
+                <span [id]="'badge-'+estudiante.id" class="badge" [ngClass]="{'text-bg-danger': estudiante.literal=='F', 'text-bg-primary': estudiante.literal=='B','text-bg-success': estudiante.literal=='A' ,'text-bg-warning': estudiante.literal=='C'}">{{estudiante.literal}}</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

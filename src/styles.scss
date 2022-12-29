@@ -2,8 +2,4 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
-
-.gap-1 {
-    gap: 1;
-}
-
+@import 'node_modules/bootstrap-icons/font/bootstrap-icons'

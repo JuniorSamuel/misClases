@@ -1,0 +1,53 @@
+<div class="my-3 d-flex justify-content-between">
+    <div>
+        <form class="row needs-validation" novalidate></form>
+        <input [(ngModel)]="searchField" class="form-control" type="text" name="find" id="find-input"
+            placeholder="Buscar" required>
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="openModal(content)">Agregar</button>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> # </th>
+            <th> Materia </th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            *ngFor="let m of materias | filterWithPagination:searchField:['nombre']:pagPageSize:pagPage:pagEventEmitter;index as i">
+            <td>{{i+1+((pagPage-1)*pagPageSize)}}</td>
+            <td>{{m.nombre}}</td>
+            <td style="width: 30px;">
+                <button class="btn btn-success" [routerLink]="['/home/sub', m.id, m.nombre]">ver</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+<ngb-pagination class="d-flex justify-content-end" [(page)]="pagPage" [pageSize]="pagPageSize" [collectionSize]="pagLengthList"></ngb-pagination>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar Materia</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form" [ngClass]="{'was-validated':formValidation}" novalidate>
+            <input type="text" class="form-control" placeholder="ejemplo: Matematica" formControlName="title" required>
+            <div class="invalid-feedback">
+                Este campo es requerido.
+            </div>
+            <div class="valid-feedback">
+                Agregando...
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" (click)="addMateria()">Agregar</button>
+    </div>
+</ng-template>

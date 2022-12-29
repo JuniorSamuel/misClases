@@ -1,9 +1,11 @@
 <div class="body">
-    
-<app-header></app-header>
-<div class="container mt-5">
-    <router-outlet ></router-outlet>
-</div>
+    <app-header></app-header>
 
-<app-footer></app-footer>
+    <main class="my-5 container py-3 ">
+        <router-outlet></router-outlet>
+    </main>
+
+    <app-footed></app-footed>
+
+    <app-toasts></app-toasts>
 </div>
