@@ -8,8 +8,10 @@ import { SharedModule } from '../shared/shared.module';
 import { SubjectComponent } from './page/subject/subject.component';
 import { ScorePipe } from './pipe/score/score.pipe';
 import { StudentComponent } from './page/student/student.component';
-import { TakeAttendanceComponent } from './page/take-attendance/take-attendance.component';
+import { AttendanceComponent } from './page/attendance/attendance.component';
 import { HistoyAttendancePipe, takeAttendancePipe } from './pipe/take-attendance/histoy-attendance.pipe';
+import { AttendanceHistoryComponent } from './component/attendance-history/attendance-history.component';
+import { TakeAttendanceComponent } from './component/take-attendance/take-attendance.component';
 
 
 @NgModule({
@@ -18,9 +20,11 @@ import { HistoyAttendancePipe, takeAttendancePipe } from './pipe/take-attendance
     SubjectComponent,
     ScorePipe,
     StudentComponent,
-    TakeAttendanceComponent,
+    AttendanceComponent,
     takeAttendancePipe,
-    HistoyAttendancePipe
+    HistoyAttendancePipe,
+    AttendanceHistoryComponent,
+    TakeAttendanceComponent
   ],
   imports: [
     CommonModule,

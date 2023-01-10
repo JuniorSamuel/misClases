@@ -1,6 +1,6 @@
 <div class="my-3 d-flex justify-content-between">
     <div>
-       <h5>{{materia.nombre}}</h5>
+       <h5>{{subject.name}}</h5>
     </div>
     <div>
         <button class="btn btn-primary" (click)="updateScore()">Guardar Cambios</button>
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let estudiante of estudiantes | score:materia.id; let i=index">
+        <tr *ngFor="let estudiante of estudiantes | score:subject.id; let i=index">
             <th scope="row">{{i+1}}</th>
             <td>{{estudiante.nombre}} {{estudiante.apellido}}</td>
             <td style="width: 30px;">

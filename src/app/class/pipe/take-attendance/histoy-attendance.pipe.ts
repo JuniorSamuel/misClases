@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { retry } from 'rxjs';
 import { Util } from 'src/app/shared/class/Util/util';
-import { Estudiante } from '../../interface/estudiante.interface';
-import { Lista } from '../../interface/lista.interface';
+import { Student } from '../../interface/student.interface';
+import { Attendance } from '../../interface/attendance.interface';
 
 
-export interface Attendance {
+export interface AttendanceTable {
   id: number,
   nombre: string,
   apellido: string
@@ -25,16 +25,16 @@ export interface Histoy {
 })
 export class takeAttendancePipe implements PipeTransform {
 
-  transform(value: Estudiante[], ...args: unknown[]): Attendance[] {
-    let attendance: Attendance[] = []
-
-    value.forEach((e, i) => {
-      let a: Attendance = {
-        id: e.id,
-        nombre: e.nombre,
-        apellido: e.apellido,
-        ausencias: this.getCount(e.lista, "A"),
-        excusas: this.getCount(e.lista, "E")
+  transform(value: Student[], ...args: unknown[]): AttendanceTable[] {
+    let attendance: AttendanceTable[] = []
+    
+    value.forEach((student, i) => {
+      let a: AttendanceTable = {
+        id: student.id,
+        nombre: student.name,
+        apellido: student.lastName,
+        ausencias: this.getCount(student.attendances, "A"),
+        excusas: this.getCount(student.attendances, "E")
       }
 
       attendance.push(a)
@@ -42,8 +42,8 @@ export class takeAttendancePipe implements PipeTransform {
     return attendance;
   }
 
-  private getCount(list: Lista[], value: string): number {
-    return list.filter(v => v.estado == value).length;
+  private getCount(list: Attendance[], value: string): number {
+    return list.filter(v => v.status == value).length;
   }
 
 }
@@ -53,18 +53,18 @@ export class takeAttendancePipe implements PipeTransform {
 })
 export class HistoyAttendancePipe implements PipeTransform {
 
-  transform(value: Estudiante[], titleDia: Date[], week: number, date: Date): Histoy[] {
+  transform(value: Student[], titleDia: Date[], week: number, date: Date): Histoy[] {
 
     let start: Date = date;
 
     let list: Histoy[] = []
 
-    value.forEach((e, i) => {
+    value.forEach((student, i) => {
       let h: Histoy = {
         id: i,
-        nombre: e.nombre,
-        apellido: e.apellido,
-        semana: this.getValue(e.lista, start)
+        nombre: student.name,
+        apellido: student.lastName,
+        semana: this.getValue(student.attendances, start)
       }
       list.push(h);
     });
@@ -78,9 +78,10 @@ export class HistoyAttendancePipe implements PipeTransform {
 
   }
 
-  getValue(list: Lista[], date: Date): string[] {
+  getValue(list: Attendance[], date: Date): string[] {
     let status: string[] = ["-", "-", "-", "-", "-"]
-    let indexStart = list.findIndex(value => this.chackDate(value.fecha, date)) 
+    
+    let indexStart = list.findIndex(value => this.chackDate(value.date, date)) 
 
     if (list.length == 0 || indexStart < 0) return status;
 
@@ -88,8 +89,8 @@ export class HistoyAttendancePipe implements PipeTransform {
       for (let i = indexStart; i < list.length; i++) {
         const element = list[i];
 
-        if(element.estado !="-" && this.isEgualDate(element.fecha, date)){
-          status[index] = element.estado;
+        if(element.status !="-" && this.isEgualDate(element.date, date)){
+          status[index] = element.status;
         }
       }
 

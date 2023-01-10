@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter} from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BsToastService } from 'src/app/core/service/bs-toast.service';
-import { Materia } from '../../interface/materia.interface';
+import { BsToastService, ToastStyle } from 'src/app/core/service/bs-toast.service';
+import { Subject } from '../../interface/subject.interface';
 import { ClassApiService } from '../../service/class-api.service';
 
 @Component({
@@ -18,9 +18,9 @@ export class HomeComponent implements OnInit  {
   public pagPageSize: number = 5;
   public pagLengthList: number = 0;
   public pagEventEmitter: EventEmitter<number> = new EventEmitter<number>()
-  public materias: Materia[] = []
+  public subjectes: Subject[] = []
   
-  // add Materia.
+  // add Subject.
   public form: FormGroup = new FormGroup({title: new FormControl('', Validators.required)})
   public formValidation: boolean = false;
 
@@ -35,9 +35,9 @@ export class HomeComponent implements OnInit  {
   }
 
   private getData() {
-    this.classApi.Materia.getAll().subscribe(
+    this.classApi.Subject.getAll().subscribe(
       res => {
-        this.materias = res
+        this.subjectes = res
       }
     )
   }
@@ -49,12 +49,12 @@ export class HomeComponent implements OnInit  {
   public addMateria(){
     this.formValidation = true;
     if (this.form.valid) {
-      let m:Materia = {id: 0, nombre: this.form.controls['title'].value}
-      this.classApi.Materia.add(m).subscribe( res => {
+      let subject:Subject = {id: 0, name: this.form.controls['title'].value.trim()}
+      this.classApi.Subject.add(subject).subscribe( res => {
         console.log(res);
-        this.materias.push(res)
+        this.subjectes.push(res)
         this.ngbModal.dismissAll()
-        this.toast.show(`${m.nombre} fue agregado.`)
+        this.toast.show(`${subject.name} fue agregado.`, {style: ToastStyle.Success})
       })
     }
   }

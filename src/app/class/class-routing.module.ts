@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './page/home/home.component';
 import { StudentComponent } from './page/student/student.component';
 import { SubjectComponent } from './page/subject/subject.component';
-import { TakeAttendanceComponent } from './page/take-attendance/take-attendance.component';
+import { AttendanceComponent } from './page/attendance/attendance.component';
 import { takeAttendancePipe } from './pipe/take-attendance/histoy-attendance.pipe';
 
 const routes: Routes = [
@@ -23,8 +23,8 @@ const routes: Routes = [
         component: StudentComponent
       },
       {
-        path: 'take_attendence',
-        component: TakeAttendanceComponent
+        path: 'attendence',
+        component: AttendanceComponent
       }
     ]
   },{path: "**", redirectTo: ""}

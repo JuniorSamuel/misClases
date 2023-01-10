@@ -20,18 +20,18 @@
     </thead>
     <tbody>
         <tr
-            *ngFor="let estudiante of Estudiantes | filterWithPagination:searchField:['nombre']:pagPageSize:pagPage:pagEventEmitter; let i=index">
+            *ngFor="let student of Students | filterWithPagination:searchField:['name']:pagPageSize:pagPage:pagEventEmitter; let i=index">
             <th scope="row">{{i+1+((pagPage-1)*pagPageSize)}}</th>
-            <td>{{estudiante?.nombre}}</td>
-            <td>{{estudiante?.apellido}}</td>
-            <td style="width: auto;">{{estudiante?.comentario | slice:0:15}}</td>
+            <td>{{student?.name}}</td>
+            <td>{{student?.lastName}}</td>
+            <td style="width: auto;">{{student?.comment | slice:0:15}}</td>
             <td style="width: 30px;">
-                <div *ngIf="estudiante.id" class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <div *ngIf="student.id" class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <button title="Modificar" type="button" class="btn btn-danger"
-                        (click)="openModal(deleteModal, ModalStatus.Delete, estudiante)"><i class="bi bi-trash"></i>
+                        (click)="openModal(deleteModal, ModalStatus.Delete, student)"><i class="bi bi-trash"></i>
                     </button>
                     <button title="Eliminar" type="button" class="btn btn-warning"
-                        (click)="openModal(studentModal, ModalStatus.Update, estudiante)"><i class="bi bi-pencil"></i>
+                        (click)="openModal(studentModal, ModalStatus.Update, student)"><i class="bi bi-pencil"></i>
                     </button>
                 </div>
             </td>
@@ -59,17 +59,17 @@
                 <div class="mb-3 col-12 col-md-4">
                     <label for="name-field" class="form-label">Nombre</label>
                     <input class="form-control" placeholder="Juan" type="text" name="" id="name-field"
-                        formControlName="nombre" required>
+                        formControlName="name" required>
                 </div>
                 <div class="mb-3 col-12 col-md-4">
                     <label for="lastName-field" class="form-label">Apellido</label>
                     <input class="form-control" placeholder="Medina" type="text" name="" id="lastName-field"
-                        formControlName="apellido" required>
+                        formControlName="lastName" required>
                 </div>
                 <div class="mb-3 col-12">
                     <label ifor="comment-field" class="form-label">Comentario</label>
                     <textarea class="form-control" name="comment" id="comment-field" cols="30" rows="10"
-                        placeholder="Agrega un comentario (Opcional)" formControlName="comentario"></textarea>
+                        placeholder="Agrega un comentario (Opcional)" formControlName="comment"></textarea>
                 </div>
             </form>
         </div>
@@ -87,13 +87,13 @@
 <!-- Delete modal -->
 <ng-template #deleteModal let-modalDelete>
     <div class="modal-header">
-        <h1 class="modal-title fs-5" id="studentmodalLabel"> Eliminar a {{student.nombre}}</h1>
+        <h1 class="modal-title fs-5" id="studentmodalLabel"> Eliminar a {{student.name}}</h1>
         <button type="button" class="btn-close" aria-label="Close" (click)="modalDelete.dismiss()"></button>
     </div>
     <div class="modal-boby">
         <div class="m-3">
-            <p class="text-danger">
-                ¿Seguro quiere eliminar a {{student.nombre}} {{student.apellido}}?
+            <p>
+                ¿Seguro quiere eliminar a <span class="text-danger"> {{student.name}} {{student.lastName}}</span>?
             </p>
 
             <p>Esta acción no es reversible</p>

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Calificacion } from '../../interface/calificacion.interface';
-import { Estudiante } from '../../interface/estudiante.interface';
+import { Score } from '../../interface/score.interface';
+import { Student } from '../../interface/student.interface';
 
 export interface tableScore {
   id: number,
@@ -16,16 +16,16 @@ export interface tableScore {
 })
 export class ScorePipe implements PipeTransform {
 
-  transform(value: Estudiante[], idSubject: number): tableScore[] {
+  transform(value: Student[], idSubject: number): tableScore[] {
     let ts: tableScore[] = []
 
-    value.forEach( (e,i) => {
+    value.forEach( (student,i) => {
       let t: tableScore = {
-        id: e.id,
-        idCalificacion: this.getId(e.calificacions, e.id, idSubject),
-        nombre: e.nombre,
-        apellido: e.apellido,
-        calificacion: this.getScore(e.calificacions, e.id, idSubject),
+        id: student.id,
+        idCalificacion: this.getId(student.scores, student.id, idSubject),
+        nombre: student.name,
+        apellido: student.lastName,
+        calificacion: this.getScore(student.scores, student.id, idSubject),
         literal: ""
       }
 
@@ -36,13 +36,13 @@ export class ScorePipe implements PipeTransform {
     return ts;
   }
 
-  public getScore(c: Calificacion[], idStudent: number, idSubject: number): number {
-    let v = c.find(e => e.idEstudiante == idStudent && e.idMateria == idSubject)?.valor
+  public getScore(c: Score[], idStudent: number, idSubject: number): number {
+    let v = c.find(student => student.studentId == idStudent && student.subjectId == idSubject)?.value
     return v ? v : 0;
   }
 
-  public getId(c: Calificacion[], idStudent: number, idSubject: number): number {
-    let v = c.find(e => e.idEstudiante == idStudent && e.idMateria == idSubject)?.id
+  public getId(c: Score[], idStudent: number, idSubject: number): number {
+    let v = c.find(student => student.studentId == idStudent && student.subjectId == idSubject)?.id
     return v ? v : 0;
   }
 

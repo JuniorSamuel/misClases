@@ -1,0 +1,35 @@
+<div>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-index-tab" data-bs-toggle="tab" data-bs-target="#nav-index"
+                type="button" role="tab" aria-controls="nav-index" aria-selected="true">Pasar lista</button>
+            <button class="nav-link" id="nav-history-tab" data-bs-toggle="tab" data-bs-target="#nav-history"
+                type="button" role="tab" aria-controls="nav-history" aria-selected="false">Historial</button>
+        </div>
+    </nav>
+
+    <!-- Tab Take Attendance -->
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-index" role="tabpanel" aria-labelledby="nav-index-tab"
+            tabindex="0">
+
+            <app-take-attendance
+                [list]="Students"
+                [today]="today"
+                (onSaveAttendance)="getSaveAttendance($event)"
+            ></app-take-attendance>
+        </div>
+
+        <!-- Tab History -->
+        <div class="tab-pane fade " id="nav-history" role="tabpanel" aria-labelledby="nav-history-tab" 
+            tabindex="0">
+
+            <app-attendance-history 
+                [list]="Students" 
+                [firstDayOfWeek]="firstDayOfWeek"
+                [week]="dateWeek"
+                [evenStudent]="eventStream$"
+            ></app-attendance-history>
+        </div>
+    </div>
+</div>

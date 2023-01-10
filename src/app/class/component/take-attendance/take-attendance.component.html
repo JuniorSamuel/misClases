@@ -1,0 +1,64 @@
+<div class="row justify-content-between mt-3">
+    <div class="col-12 col-md-4">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="date-field">Fecha</label>
+
+            <input class="form-control" 
+                placeholder="yyyy-mm-dd"
+                [(ngModel)]="selectedDate"
+                (dateSelect)="dateSelect()"
+                [footerTemplate]="footerTemplate"
+                ngbDatepicker  #d="ngbDatepicker" />
+                <ng-template #footerTemplate>
+                    <hr class="my-0" />
+                    <button class="btn btn-primary btn-sm m-2 float-start" (click)="selectedDate = today; d.close()">Today</button>
+                    <button class="btn btn-secondary btn-sm m-2 float-end" (click)="d.close()">Close</button>
+                </ng-template>
+            <button title="open_calendar" class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="d.toggle()" type="button"></button>
+        </div>
+    </div>
+    <div class="col-12 col-md-5">
+        <div class="d-flex gap-1 justify-content-end">
+            <button class="btn btn-success" (click)="allPresent()">Todos Presentes</button>
+            <button class="btn btn-outline-success" (click)="sendAttendace()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<table class="table my-4">
+    <thead>
+        <tr>
+            <th scope="col" class="col-ps-20">#</th>
+            <th scope="col" class="col-ps-20">Nombre</th>
+            <th scope="col" class="col-ps-20">Ausencia</th>
+            <th scope="col" class="col-ps-20"> Excusas</th>
+            <th scope="col" class="col-ps-20">Estatus</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let estudiante of Students| takeAttendancePipe; let i=index">
+            <th scope="row" class="col-ps-20">{{i+1}}</th>
+            <td scope="col" class="col-ps-20">{{estudiante.nombre}} {{estudiante.apellido}}</td>
+            <td scope="col" class="col-ps-20">
+                <span [bsBadge]="estudiante.ausencias" [opt]="{danger: '>=3', warning: '>=2', success: '\<=1'}" ></span>
+            </td>
+            <td scope="col" class="col-ps-20">
+                <span [bsBadge]="estudiante.excusas" [opt]="{danger: '>=6', warning: '>=3', success: '\<=2'}" ></span>
+            </td>
+            <td scope="col">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn"
+                        [ngClass]="{'btn-outline-danger': !Attendance[estudiante.id] || Attendance[estudiante.id]!='A', 'btn-danger': Attendance[estudiante.id]=='A'}"
+                        (click)="selectStatu(estudiante.id, 'A')" >A</button>
+                    <button type="button" class="btn"
+                        [ngClass]="{'btn-outline-secondary': !Attendance[estudiante.id] || Attendance[estudiante.id]!='E', 'btn-secondary': Attendance[estudiante.id]=='E'}"
+                        (click)="selectStatu(estudiante.id, 'E')" >E</button>
+                    <button type="button" class="btn"
+                        [ngClass]="{'btn-outline-success': !Attendance[estudiante.id] || Attendance[estudiante.id]!='P', 'btn-success': Attendance[estudiante.id]=='P'}"
+                        (click)="selectStatu(estudiante.id, 'P')" >P</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Estudiante } from '../../interface/estudiante.interface';
+import { Student } from '../../interface/student.interface';
 import { ClassApiService } from '../../service/class-api.service';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BsToastService, ToastStyle } from 'src/app/core/service/bs-toast.service';
@@ -18,13 +18,13 @@ export class StudentComponent implements OnInit {
   public pagPageSize: number = 5;
   public pagLengthList: number = 0;
   public pagEventEmitter: EventEmitter<number> = new EventEmitter<number>()
-  public Estudiantes: Estudiante[] = [];
+  public Students: Student[] = [];
   
   // add Student
   public formStudent: FormGroup;
   public modalStatus: ModalStatus = ModalStatus.Add;
   public ModalStatus = ModalStatus;
-  public student: Estudiante | any = {}
+  public student: Student | any = {}
 
   // Toast
   public ToastSyle = ToastStyle;
@@ -32,9 +32,9 @@ export class StudentComponent implements OnInit {
   constructor(private claseApi: ClassApiService, private formBuilder: FormBuilder, private ngbModal: NgbModal, private toast: BsToastService) {
     this.formStudent = formBuilder.group({
       id: 0,
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      comentario: ['']
+      name: ['', Validators.required],
+      lastName: ['', Validators.required],
+      comment: ['']
     })
   }
 
@@ -48,9 +48,9 @@ export class StudentComponent implements OnInit {
   }
 
   getStudents() {
-    this.claseApi.Estudiante.getAll()
+    this.claseApi.Student.getAll()
       .subscribe((res) => {
-        this.Estudiantes = res;
+        this.Students = res;
       }, err => {
         this.toast.show('Algo salio mal...', {style: ToastStyle.Danger})
       })
@@ -82,10 +82,10 @@ export class StudentComponent implements OnInit {
     document.getElementById("form-student")?.classList.add('was-validated');
 
     if (this.formStudent.valid) {
-      let estudiante: Estudiante = this.formStudent.value;
-      estudiante.id = 0;
+      let student: Student = this.formStudent.value;
+      student.id = 0;
 
-      this.claseApi.Estudiante.add(estudiante).subscribe((res) => {
+      this.claseApi.Student.add(student).subscribe((res) => {
         document.getElementById("id-close-modal")?.click();
         this.formStudent.reset()
         this.toast.show('Registro guardado', {style: ToastStyle.Success})
@@ -96,8 +96,8 @@ export class StudentComponent implements OnInit {
   }
 
   public deleteStudent(id: number) {
-    this.claseApi.Estudiante.delete(id).subscribe((res) => {
-      this.Estudiantes = this.Estudiantes.filter((e) => e.id !== id);
+    this.claseApi.Student.delete(id).subscribe((res) => {
+      this.Students = this.Students.filter((s) => s.id !== id);
       this.ngbModal.dismissAll()
       this.toast.show('Registro eliminado', {style: ToastStyle.Danger})
 
@@ -111,12 +111,12 @@ export class StudentComponent implements OnInit {
     document.getElementById("form-student")?.classList.add('was-validated');
 
     if (this.formStudent.valid) {
-      let estudiante: Estudiante = this.formStudent.value
-      this.claseApi.Estudiante.update(estudiante.id, estudiante).subscribe((res) => {
+      let student: Student = this.formStudent.value
+      this.claseApi.Student.update(student.id, student).subscribe((res) => {
         console.log(res);
 
-        this.Estudiantes = this.Estudiantes.filter((e) => e.id !== estudiante.id);
-        this.Estudiantes.unshift(res);
+        this.Students = this.Students.filter((s) => s.id !== student.id);
+        this.Students.unshift(res);
 
         this.ngbModal.dismissAll()
         this.toast.show('Registro actualizado', {style: ToastStyle.Warning})

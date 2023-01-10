@@ -19,11 +19,11 @@
     </thead>
     <tbody>
         <tr
-            *ngFor="let m of materias | filterWithPagination:searchField:['nombre']:pagPageSize:pagPage:pagEventEmitter;index as i">
+            *ngFor="let s of subjectes | filterWithPagination:searchField:['name']:pagPageSize:pagPage:pagEventEmitter;index as i">
             <td>{{i+1+((pagPage-1)*pagPageSize)}}</td>
-            <td>{{m.nombre}}</td>
+            <td>{{s.name}}</td>
             <td style="width: 30px;">
-                <button class="btn btn-success" [routerLink]="['/home/sub', m.id, m.nombre]">ver</button>
+                <button class="btn btn-success" [routerLink]="['/home/sub', s.id, s.name]">ver</button>
             </td>
         </tr>
     </tbody>
